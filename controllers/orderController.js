@@ -13,7 +13,7 @@ exports.addOrders = async (req, res) => {
   res.json({ message: "Orders created Successfully..." });
 };
 
-// Logic for canceling orders by user
+// Logic for cancelling orders by user
 exports.cancelOrder = async (req, res) => {
     try {
         const { id } = req.params; // Get order ID from URL params
@@ -27,8 +27,8 @@ exports.cancelOrder = async (req, res) => {
 
         // Check if the order status allows cancellation
         if (["Pending", "Shipped"].includes(order.status)) {
-            // Update order status to 'Canceled'
-            await Order.findByIdAndUpdate(id, { status: "Canceled" }, { new: true });
+            // Update order status to 'Cancelled'
+            await Order.findByIdAndUpdate(id, { status: "Cancelled" }, { new: true });
             return res.status(200).json({ message: "Order has been cancelled successfully" });
         } else {
             return res.status(400).json({ message: "Order cannot be cancelled at this stage" });
