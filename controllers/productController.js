@@ -6,6 +6,19 @@ exports.getProducts = async (req, res) => {
   res.json(products);
 };
 
+// Logic for get product by id.
+exports.getProductById = async (req, res) => {
+  const { id } = req.params;
+  const affectedRows = await Product.findById(id);
+
+  if(!affectedRows){
+    res.status(404).json({ message: "Product not found!" });
+  }
+
+  res.json(affectedRows);
+
+}
+
 // Logic for save or create a product.
 exports.addProduct = async (req, res) => {
   const newProduct = new Product(req.body); // Creates an object of a each products.

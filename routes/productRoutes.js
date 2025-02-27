@@ -5,6 +5,9 @@ const router = express.Router();
 // Get Mapping to list all the Products.
 router.get('/getAllProducts', productController.getProducts);
 
+// Get Mapping to get particular product details by Id.
+router.get('/getProductById/:id', productController.getProductById);
+
 // Post Mapping to save products.
 router.post('/saveProduct', productController.addProduct);
 
