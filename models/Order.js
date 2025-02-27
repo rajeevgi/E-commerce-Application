@@ -15,7 +15,7 @@ const orderSchema = mongoose.Schema({
   totalAmount: Number,
   status: {
     type: String,
-    enum: ["Pending", "Shipped", "Delivered"],
+    enum: ["Pending", "Shipped", "Delivered", "Cancelled"],
     default: "Pending",
   },
 });
@@ -42,8 +42,8 @@ orderSchema.pre('save', async function (next) {
 });
 
 // Restore stock after cancelling an order.
-orderSchema.post('findAndUpdate', async function (doc) {
-  if(doc.status === "cancelled"){
+orderSchema.post('findOneAndUpdate', async function (doc) {
+  if(doc.status === "Cancelled"){
     for(let item of doc.items){
       await Product.findByIdAndUpdate(item.product, { $inc : { stock: item.quantity }});
     }

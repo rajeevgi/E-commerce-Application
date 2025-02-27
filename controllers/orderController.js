@@ -38,3 +38,16 @@ exports.cancelOrder = async (req, res) => {
     }
 };
 
+exports.deleteOrder = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteOrder = await Order.findByIdAndDelete(id);
+
+        if(!deleteOrder){
+            res.status(404).json({ message : "Order Not found!" });
+        }
+        res.json({ message : "Order Deleted Successfully...",deleteOrder});
+    } catch (error) {
+        res.status(500).json({ message : "Internal Server Error!" });
+    }
+}
